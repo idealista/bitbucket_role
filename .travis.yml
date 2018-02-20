@@ -17,6 +17,7 @@ services:
 install:
   - pip install ansible==${ansible_version}
   - pip install molecule==1.25.0
+  - pip install ansible-lint==3.4.20
   - pip install docker
 
 script:
