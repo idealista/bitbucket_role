@@ -1,0 +1,14 @@
+---
+- name: Bitbucket | Copy systemd template
+  template:
+    src: bitbucket.service.j2
+    dest: /etc/systemd/system/bitbucket.service
+    mode: 0755
+  notify: restart bitbucket
+
+- name: Bitbucket | Register systemd service
+  systemd:
+    name: bitbucket
+    enabled: true
+    daemon_reload: true
+    state: started

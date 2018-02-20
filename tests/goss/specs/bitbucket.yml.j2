@@ -1,0 +1,38 @@
+http:
+  http://localhost:{{ bitbucket_port }}/:
+    status: 200
+
+port:
+  tcp:{{ bitbucket_port }}:
+    listening: true
+  tcp:7992:
+    listening: true
+  tcp:7993:
+    listening: true
+
+group:
+  {{ bitbucket_group }}:
+    exists: true
+
+user:
+  {{ bitbucket_user }}:
+    exists: true
+    groups:
+      - {{ bitbucket_group }}
+
+file:
+  {{ bitbucket_install_dir }}:
+    exists: true
+    owner: {{ bitbucket_user }}
+    group: {{ bitbucket_group }}
+    filetype: directory
+  {{ bitbucket_home_dir }}:
+    exists: true
+    owner: {{ bitbucket_user }}
+    group: {{ bitbucket_group }}
+    filetype: directory
+
+service:
+  bitbucket:
+    enabled: true
+    running: true

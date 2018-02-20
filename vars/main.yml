@@ -1,0 +1,7 @@
+---
+bitbucket_dependencies:
+  - perl
+  - git
+
+bitbucket_url: https://www.atlassian.com/software/stash/downloads/binary/
+bitbucket_package: "atlassian-bitbucket-{{ bitbucket_version }}"

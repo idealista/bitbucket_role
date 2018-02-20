@@ -1,0 +1,128 @@
+#-----------------------------------------------------------------------------------
+# JMX
+#
+# JMX is enabled by selecting an authentication method value for JMX_REMOTE_AUTH and then configuring
+# related the variables.
+#
+# See http://docs.oracle.com/javase/7/docs/technotes/guides/management/agent.html for more information
+# on JMX configuration in general.
+#-----------------------------------------------------------------------------------
+
+# Set the authentication to use for remote JMX access. Anything other than "password" or "ssl" will
+# cause remote JMX access to be disabled.
+#
+JMX_REMOTE_AUTH={{ bitbucket_jmx.remote_auth.type }}
+
+
+# The port for remote JMX support if enabled
+#
+if [ -z "${JMX_REMOTE_PORT}" ]; then
+    JMX_REMOTE_PORT={{ bitbucket_jmx.remote_port }}
+fi
+
+
+# If `hostname -i` returns a local address then JMX-RMI communication may fail because the address returned
+# by JMX for the RMI-JMX stub will not resolve for non-local clients. To fix this you will need to explicitly
+# specify the IP address / host name of this server that is reachable / resolvable by JMX clients. e.g.
+# RMI_SERVER_HOSTNAME="non.local.name.of.my.bitbucket.server"
+#
+RMI_SERVER_HOSTNAME={{ bitbucket_jmx.rmi_server_hostname }}
+
+
+# After authentication JMX-RMI will choose a random port for RMI data transfer. If running inside a Docker
+# container or behind a strict firewall communication may fail because the randomly chosen port is not open.
+# To fix this you can manually specify the RMI data port. The RMI data port can be set to the same value as
+# JMX_REMOTE_PORT, although this is not necessary, e.g. JMX_REMOTE_RMI_PORT=3333
+#
+JMX_REMOTE_RMI_PORT={{ bitbucket_jmx.remote_rmi_port }}
+
+{% if bitbucket_jmx.remote_auth.type=="password" %}
+#-----------------------------------------------------------------------------------
+# JMX username/password support
+#-----------------------------------------------------------------------------------
+
+# The full path to the JMX username/password file used to authenticate remote JMX clients
+#
+JMX_PASSWORD_FILE={{ bitbucket_jmx.remote_auth.password_file }}
+{% elif bitbucket_jmx.remote_auth.type=="ssl" %}
+#-----------------------------------------------------------------------------------
+# JMX SSL support
+#-----------------------------------------------------------------------------------
+
+# The full path to the Java keystore which must contain Bitbucket's key pair used for SSL authentication for JMX
+#
+JAVA_KEYSTORE={{ bitbucket_jmx.remote_auth.ssl_java_keystore }}
+
+# The password for JAVA_KEYSTORE
+#
+JAVA_KEYSTORE_PASSWORD={{ bitbucket_jmx.remote_auth.ssl_java_keystore_password }}
+
+# The full path to the Java truststore which must contain the client certificates accepted by Bitbucket for
+# SSL authentication of JMX
+#
+JAVA_TRUSTSTORE={{ bitbucket_jmx.remote_auth.ssl_java_truststore }}
+
+# The password for JAVA_TRUSTSTORE
+#
+JAVA_TRUSTSTORE_PASSWORD={{ bitbucket_jmx.remote_auth.ssl_java_truststore_password }}
+{% endif %}
+
+if [ -n "$RMI_SERVER_HOSTNAME" ]; then
+    RMI_SERVER_HOSTNAME="-Djava.rmi.server.hostname=${RMI_SERVER_HOSTNAME/-Djava.rmi.server.hostname=/}"
+fi
+
+if [ -n "$JMX_REMOTE_RMI_PORT" ]; then
+    JMX_REMOTE_RMI_PORT="-Dcom.sun.management.jmxremote.rmi.port=${JMX_REMOTE_RMI_PORT/-Dcom.sun.management.jmxremote.rmi.port=/}"
+fi
+
+if [ "$JMX_REMOTE_AUTH" = "password" ]; then
+    if [ -z "$JMX_REMOTE_PORT" ]; then
+        echo -e "\nRemote JMX is enabled, but no port has been configured."
+        echo "Edit set-jmx-opts.sh and define JMX_REMOTE_PORT"
+        return 1
+    fi
+
+    if [ -z "$JMX_PASSWORD_FILE" ] || [ ! -f "$JMX_PASSWORD_FILE" ]; then
+        echo -e "\nRemote JMX with username/password authentication is enabled, but a password"
+        echo "file has not been configured. Edit set-jmx-opts.sh and define JMX_PASSWORD_FILE"
+        return 1
+    fi
+
+    JMX_OPTS="-Dcom.sun.management.jmxremote.port=${JMX_REMOTE_PORT} ${JMX_REMOTE_RMI_PORT} ${RMI_SERVER_HOSTNAME} -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.password.file=${JMX_PASSWORD_FILE}"
+    export JMX_OPTS
+elif [ "$JMX_REMOTE_AUTH" = "ssl" ]; then
+    if [ -z "$JMX_REMOTE_PORT" ]; then
+        echo -e "\nRemote JMX is enabled, but no port has been configured."
+        echo "Edit set-jmx-opts.sh and define JMX_REMOTE_PORT"
+        return 1
+    fi
+
+    if [ -z "$JAVA_KEYSTORE" ] || [ ! -f "$JAVA_KEYSTORE" ]; then
+        echo -e "\nRemote JMX with SSL authentication is enabled, but the Java keystore has"
+        echo "not been configured. Edit set-jmx-opts.sh and define JAVA_KEYSTORE"
+        return 1
+    fi
+
+    if [ -z "$JAVA_KEYSTORE_PASSWORD" ]; then
+        echo -e "\nRemote JMX with SSL authentication is enabled, but the password for the"
+        echo "Java keystore has not been configured."
+        echo "Edit set-jmx-opts.sh and define JAVA_KEYSTORE_PASSWORD"
+        return 1
+    fi
+
+    if [ -z "$JAVA_TRUSTSTORE" ] || [ ! -f "$JAVA_TRUSTSTORE" ]; then
+        echo -e "\nRemote JMX with SSL authentication is enabled, but the Java trust store"
+        echo "has not been configured. Edit set-jmx-opts.sh and define JAVA_TRUSTSTORE"
+        return 1
+    fi
+
+    if [ -z "$JAVA_TRUSTSTORE_PASSWORD" ]; then
+        echo -e "\nRemote JMX with SSL authentication is enabled, but the password for the"
+        echo "Java trust store has not been configured."
+        echo "Edit set-jmx-opts.sh and define JAVA_TRUSTSTORE_PASSWORD"
+        return 1
+    fi
+
+    JMX_OPTS="-Dcom.sun.management.jmxremote.port=${JMX_REMOTE_PORT} ${JMX_REMOTE_RMI_PORT} ${RMI_SERVER_HOSTNAME} -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl.need.client.auth=true -Djavax.net.ssl.keyStore=${JAVA_KEYSTORE} -Djavax.net.ssl.keyStorePassword=${JAVA_KEYSTORE_PASSWORD} -Djavax.net.ssl.trustStore=${JAVA_TRUSTSTORE} -Djavax.net.ssl.trustStorePassword=${JAVA_TRUSTSTORE_PASSWORD}"
+    export JMX_OPTS
+fi

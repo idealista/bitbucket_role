@@ -1,0 +1,37 @@
+---
+- name: Copy all bin config templates
+  template:
+    src: "{{ item }}"
+    dest: "{{ bitbucket_install_dir }}/atlassian-bitbucket-{{ bitbucket_version }}/bin/{{ item | basename | splitext | first }}"
+    owner: "{{ bitbucket_user }}"
+    group: "{{ bitbucket_group }}"
+  with_fileglob:
+    - templates/bin/*
+  notify: restart bitbucket
+
+- name: Copy JMX template if enabled
+  template:
+    src: jmx/set-jmx-opts.sh.j2
+    dest: "{{ bitbucket_install_dir }}/atlassian-bitbucket-{{ bitbucket_version }}/bin/set-jmx-opts.sh"
+    owner: "{{ bitbucket_user }}"
+    group: "{{ bitbucket_group }}"
+  notify: restart bitbucket
+  when: bitbucket_jmx.enabled
+
+- name: Copy JMX password file if password secured
+  template:
+    src: jmx/jmx.access.j2
+    dest: "{{ bitbucket_jmx.remote_auth.password_file }}"
+    owner: "{{ bitbucket_user }}"
+    group: "{{ bitbucket_group }}"
+    mode: 0600
+  notify: restart bitbucket
+  when: bitbucket_jmx.enabled and bitbucket_jmx.remote_auth.type=="password"
+
+- name: Copy Bitbucket properties
+  template:
+    src: bitbucket.properties.j2
+    dest: "{{ bitbucket_home_dir }}/shared/bitbucket.properties"
+    owner: "{{ bitbucket_user }}"
+    group: "{{ bitbucket_group }}"
+  notify: restart bitbucket

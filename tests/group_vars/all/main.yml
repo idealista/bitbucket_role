@@ -1,0 +1,11 @@
+---
+bitbucket_jmx:
+  enabled: true
+  remote_port: 3333
+  rmi_server_hostname: "{{ inventory_hostname }}"
+  remote_rmi_port: 9999
+  remote_auth:
+    type: password # [password, ssl]
+    # if type: password, these variables are needed
+    password: notapassword
+    password_file: "{{ bitbucket_install_dir }}/atlassian-bitbucket-{{ bitbucket_version }}/bin/notapasswordfile"

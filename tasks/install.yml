@@ -1,0 +1,48 @@
+---
+- name: Bitbucket | Install dependencies
+  apt:
+    name: "{{ item }}"
+    state: present
+    install_recommends: yes
+    update_cache: yes
+    cache_valid_time: 3600
+  with_items:
+    - "{{ bitbucket_dependencies }}"
+
+- name: Bitbucket | Ensure bitbucket group exists
+  group:
+    name: "{{ bitbucket_group }}"
+
+- name: Bitbucket | Ensure bitbucket user exists
+  user:
+    name: "{{ bitbucket_user }}"
+    group: "{{ bitbucket_group }}"
+    shell: /bin/bash
+
+- name: Bitbucket | Ensure main bitbucket root dirs exists
+  file:
+    path: "{{ item }}"
+    owner: "{{ bitbucket_user }}"
+    group: "{{ bitbucket_group }}"
+    mode: 0755
+    state: directory
+  with_items:
+    - "{{ bitbucket_install_dir }}"
+    - "{{ bitbucket_home_dir }}/shared"
+
+- name: Bitbucket | Download
+  get_url:
+    url: "{{ bitbucket_url }}/{{ bitbucket_package }}.tar.gz"
+    dest: "/tmp/{{ bitbucket_package }}.tar.gz"
+  register: download_bitbucket
+
+- name: Bitbucket | Extract
+  unarchive:
+    src: "/tmp/{{ bitbucket_package }}.tar.gz"
+    dest: "{{ bitbucket_install_dir }}"
+    copy: no
+    owner: "{{ bitbucket_user }}"
+  when: download_bitbucket|changed
+  notify: restart bitbucket
+  tags:
+    - skip_ansible_lint

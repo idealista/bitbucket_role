@@ -1,0 +1,35 @@
+---
+bitbucket_group: bitbucket
+bitbucket_user: bitbucket
+
+bitbucket_version: 5.8.0
+
+bitbucket_install_dir: /opt/atlassian/bitbucket
+bitbucket_home_dir: /var/atlassian/bitbucket
+bitbucket_port: 7990
+
+bitbucket_java_home: /usr/lib/jvm/default-java
+bitbucket_jvm_min_memory: 512m
+bitbucket_jvm_max_memory: 1024m
+bitbucket_jmx:
+  enabled: false
+  remote_port: 3333
+  rmi_server_hostname: "{{ inventory_hostname }}"
+  remote_rmi_port: 9999
+  remote_auth:
+    type: password # [password, ssl]
+    # if type: password, these variables are needed
+    password: notapassword
+    password_file: "{{ bitbucket_home_dir }}/shared/notapasswordfile"
+    # if type: ssl, these variables are needed
+    # ssl_java_keystore:
+    # ssl_java_keystore_password:
+    # ssl_java_truststore:
+    # ssl_java_truststore_password:
+
+## Sample database configuration
+# bitbucket_database_configuration:
+#   driver: oracle.jdbc.driver.OracleDriver
+#   url: jdbc:oracle:thin:@//host:port/database
+#   user:
+#   password:

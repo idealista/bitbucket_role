@@ -1,0 +1,12 @@
+[Unit]
+Description=Atlassian Bitbucket Server Service
+After=syslog.target network.target
+
+[Service]
+Type=forking
+User={{ bitbucket_user }}
+ExecStart={{ bitbucket_install_dir }}/{{ bitbucket_package }}/bin/start-bitbucket.sh
+ExecStop={{ bitbucket_install_dir }}/{{ bitbucket_package }}/bin/stop-bitbucket.sh
+
+[Install]
+WantedBy=multi-user.target
