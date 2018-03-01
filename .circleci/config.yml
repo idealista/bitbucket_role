@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/python:2.7.12-stretch
+      - image: circleci/python:2.7.14-stretch
     working_directory: ~/apache_exporter-role
 
     steps:
