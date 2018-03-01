@@ -8,6 +8,8 @@ bitbucket_install_dir: /opt/atlassian/bitbucket
 bitbucket_home_dir: /var/atlassian/bitbucket
 bitbucket_port: 7990
 
+bitbucket_properties_template_path: bitbucket.properties.j2
+
 bitbucket_java_home: /usr/lib/jvm/default-java
 bitbucket_jvm_min_memory: 512m
 bitbucket_jvm_max_memory: 1024m

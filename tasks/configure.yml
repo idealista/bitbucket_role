@@ -5,6 +5,7 @@
     dest: "{{ bitbucket_install_dir }}/atlassian-bitbucket-{{ bitbucket_version }}/bin/{{ item | basename | splitext | first }}"
     owner: "{{ bitbucket_user }}"
     group: "{{ bitbucket_group }}"
+    mode: 0755
   with_fileglob:
     - templates/bin/*
   notify: restart bitbucket
@@ -15,6 +16,7 @@
     dest: "{{ bitbucket_install_dir }}/atlassian-bitbucket-{{ bitbucket_version }}/bin/set-jmx-opts.sh"
     owner: "{{ bitbucket_user }}"
     group: "{{ bitbucket_group }}"
+    mode: 0755
   notify: restart bitbucket
   when: bitbucket_jmx.enabled
 
@@ -27,11 +29,13 @@
     mode: 0600
   notify: restart bitbucket
   when: bitbucket_jmx.enabled and bitbucket_jmx.remote_auth.type=="password"
+  no_log: true
 
 - name: Copy Bitbucket properties
   template:
-    src: bitbucket.properties.j2
+    src: "{{ bitbucket_properties_template_path }}"
     dest: "{{ bitbucket_home_dir }}/shared/bitbucket.properties"
     owner: "{{ bitbucket_user }}"
     group: "{{ bitbucket_group }}"
+    mode: 0644
   notify: restart bitbucket
