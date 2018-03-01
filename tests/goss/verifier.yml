@@ -26,28 +26,6 @@
       with_items:
         - bitbucket.yml
 
-    - apt:
-        package: "{{ item }}"
-      with_items:
-        - net-tools
-        - curl
-
-    - command: netstat -tulpn
-      register: netstat
-
-    - debug:
-        var: netstat
-
-    - command: "curl localhost:{{ item }}"
-      register: curl
-      with_items:
-        - 7990
-        - 7992
-        - 7993
-
-    - debug:
-        var: curl
-
     - name: Goss tests
       command: "goss -g /tmp/{{ item }} validate -format documentation"
       with_items:
