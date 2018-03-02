@@ -28,6 +28,7 @@
     state: directory
   with_items:
     - "{{ bitbucket_install_dir }}"
+    - "{{ bitbucket_home_dir }}"
     - "{{ bitbucket_home_dir }}/shared"
 
 - name: Bitbucket | Download
@@ -42,6 +43,7 @@
     dest: "{{ bitbucket_install_dir }}"
     copy: no
     owner: "{{ bitbucket_user }}"
+    group: "{{ bitbucket_user }}"
   when: download_bitbucket|changed
   notify: restart bitbucket
   tags:

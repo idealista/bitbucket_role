@@ -13,6 +13,13 @@
     - ../group_vars/all/main.yml
 
   tasks:
+    - name: Ensure test tools are installed
+      apt:
+        package: "{{ item }}"
+      with_items:
+        - net-tools
+        - curl
+
     - name: Download and install Goss
       get_url:
         url: "{{ goss_url }}"
@@ -27,6 +34,6 @@
         - bitbucket.yml
 
     - name: Goss tests
-      command: "goss -g /tmp/{{ item }} validate -format tap"
+      command: "goss -g /tmp/{{ item }} validate -format documentation"
       with_items:
         - bitbucket.yml
