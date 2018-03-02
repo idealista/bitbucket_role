@@ -2,7 +2,7 @@
 bitbucket_group: bitbucket
 bitbucket_user: bitbucket
 
-bitbucket_version: 5.8.0
+bitbucket_version: 5.8.1
 
 bitbucket_install_dir: /opt/atlassian/bitbucket
 bitbucket_home_dir: /var/atlassian/bitbucket
