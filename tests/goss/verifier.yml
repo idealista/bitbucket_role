@@ -34,6 +34,6 @@
         - bitbucket.yml
 
     - name: Goss tests
-      command: "goss -g /tmp/{{ item }} validate -format documentation"
+      command: "goss -g /tmp/{{ item }} validate -format tap"
       with_items:
         - bitbucket.yml
