@@ -1,5 +1,14 @@
 ---
 - name: Bitbucket | Install dependencies
+  yum:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - "{{ bitbucket_dependencies }}"
+  when: ansible_os_family == "RedHat"
+
+- name: Bitbucket | Install dependencies
   apt:
     name: "{{ item }}"
     state: present
@@ -8,6 +17,7 @@
     cache_valid_time: 3600
   with_items:
     - "{{ bitbucket_dependencies }}"
+  when: ansible_os_family == "Debian"
 
 - name: Bitbucket | Ensure bitbucket group exists
   group:

@@ -57,6 +57,45 @@ Use in a playbook:
 
 Look to the [defaults](defaults/main.yml) properties file to see the possible configuration properties.
 
+### With CentOS
+
+Bitbucket needs at least git v2.2.0. Default CentOS repositories have older version of git. You can  install Git from source or IUS repository.
+
+#### Install Git from source
+You can install Git [manually](https://www.digitalocean.com/community/tutorials/how-to-install-git-on-centos-7).
+
+Or using [geerlingguy.git](https://galaxy.ansible.com/geerlingguy/git) role.
+
+```yaml
+- name: Install git
+  hosts: bitbucket_server
+  become: yes
+  vars:
+    git_install_from_source: true
+    git_install_from_source_force_update: true
+    git_version: "2.19.2"
+  roles:
+    - { role: geerlingguy.git }
+```
+
+#### Install Git from IUS repository
+You can enable IUS repository [manually](https://ius.io/GettingStarted/) and then install `git2u`.
+
+Or use [centralpayment.repo-ius](https://github.com/centralpayment/ansible-role-repo-ius) role.
+
+```yaml
+- name: Install git
+  hosts: bitbucket_server
+  become: yes
+  roles:
+    - { role: centralpayment.repo-ius }
+  tasks:
+    - name: Install git from IUS
+      yum:
+        name: git2u
+        state: present
+```
+
 ## Testing
 
 ### Using Vagrant as provider
