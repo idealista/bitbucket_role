@@ -12,3 +12,14 @@ jdbc.url={{ conf.url }}
 jdbc.user={{ conf.user }}
 jdbc.password={{ conf.password }}
 {% endif %}
+
+{% if bitbucket_setup_run is defined %}
+{% set setup = bitbucket_setup_configuration %}
+setup.displayName={{ setup.displayName }}
+setup.baseUrl={{ setup.baseUrl }}
+setup.license={{ setup.license }}
+setup.sysadmin.username={{ setup.sysadmin_username }}
+setup.sysadmin.password={{ setup.sysadmin_password }}
+setup.sysadmin.displayName={{ setup.sysadmin_displayName }}
+setup.sysadmin.emailAddress={{ setup.sysadmin_emailAddress }}
+{% endif %}

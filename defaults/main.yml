@@ -35,3 +35,13 @@ bitbucket_jmx:
 #   url: jdbc:oracle:thin:@//host:port/database
 #   user:
 #   password:
+
+## Sample setup configuration
+# bitbucket_setup_configuration:
+#   displayName: Bitbucket
+#   baseUrl: http://bitbucket.example.com:7990
+#   license: AAABKg0ODAoPeNptkFFrwjAUhd/zKwJ72R4iTXR2CIF...
+#   sysadmin_username: admin
+#   sysadmin_password: password
+#   sysadmin_displayName: Administrator
+#   sysadmin_emailAddress: admin@example.com

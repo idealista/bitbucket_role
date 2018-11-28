@@ -57,6 +57,18 @@ Use in a playbook:
 
 Look to the [defaults](defaults/main.yml) properties file to see the possible configuration properties.
 
+### Automated Bitbucket installation
+
+For first time installation you can define `bitbucket_setup_configuration` parameters and run playbook with `bitbucket_setup_run` variable set to `true`
+
+``` bash
+ansible-playbook bitbucket.yml -e 'bitbucket_setup_run=yes'
+```
+
+After first start configuration will be stored in database and all corresponding parameters in `bitbucket.properties` would be rewritten by Bitbucket. You don't need to use `bitbucket_setup_run` variable anymore.
+
+[More info](https://confluence.atlassian.com/bitbucketserver/automated-setup-for-bitbucket-server-776640098.html) on automated Bitbucket installation.
+
 ## Testing
 
 ### Using Vagrant as provider
