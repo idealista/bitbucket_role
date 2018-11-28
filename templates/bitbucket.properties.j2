@@ -2,6 +2,14 @@
 # All options in: https://confluence.atlassian.com/bitbucketserver/bitbucket-server-config-properties-776640155.html
 server.port={{ bitbucket_port }}
 
+{% if bitbucket_proxy_configuration is defined %}
+{% set conf = bitbucket_proxy_configuration %}
+server.secure={{ conf.secure }}
+server.proxy-port={{ conf.port }}
+server.proxy-name={{ conf.server_name }}
+server.context-path={{ conf.context_path }}
+{% endif %}
+
 jmx.enabled={{ bitbucket_jmx.enabled }}
 
 {% if bitbucket_database_configuration is defined %}
