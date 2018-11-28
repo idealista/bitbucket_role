@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a ch
 
 ## [Unreleased](https://github.com/idealista/bitbucket-role/tree/develop)
 - *[#5](https://github.com/idealista/bitbucket-role/pull/5) Bitbucket can be installed unattended* @vitkhab
+- *[#4](https://github.com/idealista/bitbucket-role/pull/4) Added Bitbucket proxy configuration* @vitkhab
 
 ## [1.1.0](https://github.com/idealista/bitbucket-role/tree/1.1.0)
 [Full Changelog](https://github.com/idealista/bitbucket-role/compare/1.0.0...1.1.0)
