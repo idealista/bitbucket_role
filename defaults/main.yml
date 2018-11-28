@@ -29,6 +29,13 @@ bitbucket_jmx:
     # ssl_java_truststore:
     # ssl_java_truststore_password:
 
+## Sample proxy configuration
+# bitbucket_proxy_configuration:
+#   secure: "true"
+#   port: 443
+#   server_name: "bitbucket.example.com"
+#   context_path: /
+
 ## Sample database configuration
 # bitbucket_database_configuration:
 #   driver: oracle.jdbc.driver.OracleDriver
