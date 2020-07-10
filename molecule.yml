@@ -69,6 +69,18 @@ docker:
       volume_mounts:
         - '/sys/fs/cgroup:/sys/fs/cgroup:ro'
       command: '/lib/systemd/systemd'
+    - name: bitbucket.centos
+      ansible_groups:
+        - centos
+      dockerfile: ./Dockerfiles/centos-java-ansible-git.Dockerfile
+      image: centos-java-ansible-git
+      image_version: latest
+      privileged: True
+      cap_add:
+        - SYS_ADMIN
+      volume_mounts:
+        - '/sys/fs/cgroup:/sys/fs/cgroup:ro'
+      command: '/lib/systemd/systemd'
 
 verifier:
   name: goss
