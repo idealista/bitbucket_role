@@ -10,6 +10,7 @@ This Ansible role installs Atlassian Bitbucket in a Debian environment and will 
 	- [Prerequisities](#prerequisities)
 	- [Installing](#installing)
 - [Usage](#usage)
+  - [With CentOS](#with-centos)
 - [Testing](#testing)
 - [Built With](#built-with)
 - [Versioning](#versioning)
@@ -59,7 +60,14 @@ Look to the [defaults](defaults/main.yml) properties file to see the possible co
 
 ### With CentOS
 
-Bitbucket needs at least git v2.2.0. Default CentOS repositories have older version of git. You can  install Git from source or IUS repository.
+Bitbucket needs at least git v2.2.0. Default CentOS repositories have older version of git. You can install Git from source or IUS repository.
+
+#### Java
+
+You may use `geerlingguy.java` or `idealista.java_role` for installing Java on you Bitbucket Server. CentOS stores Java on different path than Debian, so set variable for your Bitbucket Server:
+```yaml
+bitbucket_java_home: "/usr/lib/jvm/jre/"
+```
 
 #### Install Git from source
 You can install Git [manually](https://www.digitalocean.com/community/tutorials/how-to-install-git-on-centos-7).
