@@ -1,0 +1,23 @@
+---
+java_jdk_vendor: adoptopenjdk
+java_open_jdk_version_major: 8
+java_open_jdk_home_dir: "adoptopenjdk-{{ java_open_jdk_version_major }}-hotspot-amd64"
+java_open_jdk_home: "/usr/lib/jvm/{{ java_open_jdk_home_dir }}"
+
+bitbucket_java_home: "{{ java_open_jdk_home }}"
+bitbucket_jmx:
+  enabled: true
+  remote_port: 3333
+  rmi_server_hostname: "{{ inventory_hostname }}"
+  remote_rmi_port: 9999
+  remote_auth:
+    type: password  # [password, ssl]
+    # if type: password, these variables are needed
+    password: notapassword
+    password_file: "{{ bitbucket_install_dir }}/atlassian-bitbucket-{{ bitbucket_version }}/bin/notapasswordfile"
+
+bitbucket_plugins:
+  - name: commitgraph
+    url: https://marketplace-cdn.atlassian.com/files/artifact/bbad53e7-8672-4000-9206-13bbeceafb9f/bit-booster-commit-graph-2020.09.05.jar
+  - name: web_post_receive_hooks
+    url: https://marketplace-cdn.atlassian.com/files/artifact/96ceec6d-1ca2-45d3-8b66-a5f2ed23120e/bitbucket-web-post-receive-hooks-plugin-4.0.0.jar

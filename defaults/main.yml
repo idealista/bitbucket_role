@@ -19,7 +19,7 @@ bitbucket_jmx:
   rmi_server_hostname: "{{ inventory_hostname }}"
   remote_rmi_port: 9999
   remote_auth:
-    type: password # [password, ssl]
+    type: password  # [password, ssl]
     # if type: password, these variables are needed
     password: notapassword
     password_file: "{{ bitbucket_home_dir }}/shared/notapasswordfile"
@@ -28,6 +28,9 @@ bitbucket_jmx:
     # ssl_java_keystore_password:
     # ssl_java_truststore:
     # ssl_java_truststore_password:
+
+bitbucket_plugins_dir: "{{ bitbucket_home_dir }}/shared/plugins/installed-plugins"
+bitbucket_plugins: []  # View molecule/default/groups_vars/all.yml to view a sample setup for this list.
 
 ## Sample database configuration
 # bitbucket_database_configuration:
