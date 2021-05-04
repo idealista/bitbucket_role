@@ -14,7 +14,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a ch
 - *[#8](https://github.com/idealista/bitbucket-role/issues/8) Add `bitbucket_` prefix to `install`, `configure` and `service` tags.* @vsuarez
 - *[#8](https://github.com/idealista/bitbucket-role/issues/8) Bump ansible to 2.9.9* @vsuarez
 ### Fixed
-- *[#8]() Fix yamllint/ansiblelint * @vsuarez
+- *[#8](https://github.com/idealista/bitbucket-role/issues/8) Fix yamllint/ansiblelint * @vsuarez
 
 ## [1.1.0](https://github.com/idealista/bitbucket_role/tree/1.1.0)
 [Full Changelog](https://github.com/idealista/bitbucket_role/compare/1.0.0...1.1.0)
