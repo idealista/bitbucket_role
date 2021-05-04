@@ -2,6 +2,14 @@
 # All options in: https://confluence.atlassian.com/bitbucketserver/bitbucket-server-config-properties-776640155.html
 server.port={{ bitbucket_port }}
 
+{% if bitbucket_proxy_configuration is defined %}
+{% set conf = bitbucket_proxy_configuration %}
+server.secure={{ conf.secure }}
+server.proxy-port={{ conf.port }}
+server.proxy-name={{ conf.server_name }}
+server.context-path={{ conf.context_path }}
+{% endif %}
+
 jmx.enabled={{ bitbucket_jmx.enabled }}
 
 {% if bitbucket_database_configuration is defined %}
@@ -11,4 +19,15 @@ jdbc.driver={{ conf.driver }}
 jdbc.url={{ conf.url }}
 jdbc.user={{ conf.user }}
 jdbc.password={{ conf.password }}
+{% endif %}
+
+{% if bitbucket_setup_run is defined %}
+{% set setup = bitbucket_setup_configuration %}
+setup.displayName={{ setup.displayName }}
+setup.baseUrl={{ setup.baseUrl }}
+setup.license={{ setup.license }}
+setup.sysadmin.username={{ setup.sysadmin_username }}
+setup.sysadmin.password={{ setup.sysadmin_password }}
+setup.sysadmin.displayName={{ setup.sysadmin_displayName }}
+setup.sysadmin.emailAddress={{ setup.sysadmin_emailAddress }}
 {% endif %}
