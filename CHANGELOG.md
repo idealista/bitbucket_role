@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a ch
 - *[#7]() Support for installing plugins* @vsuarez
 - *[#8]() Add molecule/goss tests* @vsuarez
 ### Changed
+- *[#8]() Rename role to use `_role` instead of `-role` suffix* @vsuarez
 - *[#8]() Add `bitbucket_` prefix to `install`, `configure` and `service` tags.* @vsuarez
 - *[#8]() Bump ansible to 2.9.9* @vsuarez
 ### Fixed
