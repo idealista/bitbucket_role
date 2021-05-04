@@ -33,6 +33,7 @@
     - "{{ bitbucket_install_dir }}"
     - "{{ bitbucket_home_dir }}"
     - "{{ bitbucket_home_dir }}/shared"
+    - "{{ bitbucket_plugins_dir }}"
   tags: bitbucket_install
 
 - name: Bitbucket | Download
