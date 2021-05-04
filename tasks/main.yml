@@ -2,11 +2,11 @@
 - import_tasks: install.yml
   tags: bitbucket_install
 
-- import_tasks: plugins.yml
-  tags: bitbucket_plugins
-
 - import_tasks: configure.yml
   tags: bitbucket_configure
+
+- import_tasks: plugins.yml
+  tags: bitbucket_plugins
 
 - import_tasks: service.yml
   tags: bitbucket_service
