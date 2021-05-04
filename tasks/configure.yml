@@ -48,7 +48,7 @@
   replace:
     path: "{{ bitbucket_install_dir }}/atlassian-bitbucket-{{ bitbucket_version }}/app/WEB-INF/classes/logback.xml"
     regexp: '\d+\<\/maxHistory>'
-    replace: '5</maxHistory>'
+    replace: "{{ bitbucket_logrotate_maxhistory }}</maxHistory>"
     backup: yes
   notify: restart bitbucket
   tags: bitbucket_configure

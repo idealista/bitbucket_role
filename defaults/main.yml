@@ -10,6 +10,7 @@ bitbucket_plugins_dir: "{{ bitbucket_home_dir }}/shared/plugins/installed-plugin
 bitbucket_port: 7990
 
 bitbucket_properties_template_path: bitbucket.properties.j2
+bitbucket_logrotate_maxhistory: 5
 
 bitbucket_java_home: /usr/lib/jvm/default-java
 bitbucket_jvm_min_memory: 512m

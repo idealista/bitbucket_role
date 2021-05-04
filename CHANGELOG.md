@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a ch
 
 ## [Unreleased](https://github.com/idealista/bitbucket_role/tree/develop)
 ### Added
+- *[#9](https://github.com/idealista/bitbucket-role/issues/7) Allow to edit logrotate maxHistory value* @vsuarez
 - *[#7](https://github.com/idealista/bitbucket-role/issues/7) Support for installing plugins* @vsuarez
 - *[#8](https://github.com/idealista/bitbucket-role/issues/8) Add molecule/goss tests* @vsuarez
 - *[#5](https://github.com/idealista/bitbucket-role/pull/5) Bitbucket can be installed unattended* @vitkhab
