@@ -8,16 +8,19 @@
     cache_valid_time: 3600
   with_items:
     - "{{ bitbucket_dependencies }}"
+  tags: bitbucket_install
 
 - name: Bitbucket | Ensure bitbucket group exists
   group:
     name: "{{ bitbucket_group }}"
+  tags: bitbucket_install
 
 - name: Bitbucket | Ensure bitbucket user exists
   user:
     name: "{{ bitbucket_user }}"
     group: "{{ bitbucket_group }}"
-    shell: /bin/bash
+    shell: /usr/sbin/nologin
+  tags: bitbucket_install
 
 - name: Bitbucket | Ensure main bitbucket root dirs exists
   file:
@@ -30,12 +33,15 @@
     - "{{ bitbucket_install_dir }}"
     - "{{ bitbucket_home_dir }}"
     - "{{ bitbucket_home_dir }}/shared"
+    - "{{ bitbucket_plugins_dir }}"
+  tags: bitbucket_install
 
 - name: Bitbucket | Download
   get_url:
     url: "{{ bitbucket_url }}/{{ bitbucket_package }}.tar.gz"
     dest: "/tmp/{{ bitbucket_package }}.tar.gz"
   register: download_bitbucket
+  tags: bitbucket_install
 
 - name: Bitbucket | Extract
   unarchive:
@@ -44,7 +50,6 @@
     copy: no
     owner: "{{ bitbucket_user }}"
     group: "{{ bitbucket_user }}"
-  when: download_bitbucket|changed
+  when: download_bitbucket.changed
   notify: restart bitbucket
-  tags:
-    - skip_ansible_lint
+  tags:  bitbucket_install

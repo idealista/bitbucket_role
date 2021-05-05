@@ -1,0 +1,11 @@
+---
+- name: Install plugins
+  get_url:
+    dest: "{{ bitbucket_plugins_dir }}/{{ item.url | basename }}"
+    url: "{{ item.url }}"
+    owner: "{{ bitbucket_user }}"
+    group: "{{ bitbucket_group }}"
+    mode: 0644
+  with_items: "{{ bitbucket_plugins | default([]) }}"
+  notify: restart bitbucket
+  tags: bitbucket_plugins

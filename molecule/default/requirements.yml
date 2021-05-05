@@ -1,0 +1,5 @@
+---
+- src: http://github.com/idealista/java_role.git
+  scm: git
+  version: 6.1.1
+  name: java

@@ -1,0 +1,31 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint: |
+  yamllint .
+  ansible-lint .
+platforms:
+  - name: bitbucket
+    groups:
+      - bitbucket_group
+      - ${JDK_VENDOR:-adoptopenjdk}
+    image: ${MOLECULE_DISTRO:-debian:buster-slim}
+    privileged: false
+    published_ports:
+      - "7990:7990"
+    capabilities:
+      - SYS_ADMIN
+    tmpfs:
+      - /tmp
+      - /run
+      - /run/lock
+    volumes:
+      - '/sys/fs/cgroup:/sys/fs/cgroup:ro'
+    command: '/lib/systemd/systemd'
+    stop_signal: 'RTMIN+3'
+provisioner:
+  name: ansible
+verifier:
+  name: ansible

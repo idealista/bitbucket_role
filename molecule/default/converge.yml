@@ -1,0 +1,5 @@
+---
+- name: Converge
+  hosts: bitbucket_group
+  roles:
+    - role: bitbucket_role

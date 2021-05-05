@@ -1,0 +1,45 @@
+---
+http:
+  http://localhost:7990/status:
+    status: 200
+
+port:
+  tcp:7990:
+    listening: true
+  tcp:7992:
+    listening: true
+  tcp:7993:
+    listening: true
+
+service:
+  bitbucket:
+    enabled: true
+    running: true
+
+group:
+  bitbucket:
+    exists: true
+
+user:
+  bitbucket:
+      exists: true
+      groups:
+        - bitbucket
+      shell: /usr/sbin/nologin
+
+file:
+  /var/atlassian/bitbucket:
+    owner: bitbucket
+    group: bitbucket
+    exists: true
+    filetype: directory
+  /var/atlassian/bitbucket/shared/bitbucket.properties:
+    owner: bitbucket
+    group: bitbucket
+    exists: true
+    filetype: file
+  /var/atlassian/bitbucket/shared/plugins/installed-plugins/bit-booster-commit-graph-2020.09.05.jar:
+    owner: bitbucket
+    group: bitbucket
+    exists: true
+    filetype: file

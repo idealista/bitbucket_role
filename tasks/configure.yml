@@ -9,6 +9,7 @@
   with_fileglob:
     - templates/bin/*
   notify: restart bitbucket
+  tags: bitbucket_configure
 
 - name: Copy JMX template if enabled
   template:
@@ -19,6 +20,7 @@
     mode: 0755
   notify: restart bitbucket
   when: bitbucket_jmx.enabled
+  tags: bitbucket_configure
 
 - name: Copy JMX password file if password secured
   template:
@@ -30,6 +32,7 @@
   notify: restart bitbucket
   when: bitbucket_jmx.enabled and bitbucket_jmx.remote_auth.type=="password"
   no_log: true
+  tags: bitbucket_configure
 
 - name: Copy Bitbucket properties
   template:
@@ -39,3 +42,13 @@
     group: "{{ bitbucket_group }}"
     mode: 0644
   notify: restart bitbucket
+  tags: bitbucket_configure
+
+- name: Change log rotation policy
+  replace:
+    path: "{{ bitbucket_install_dir }}/atlassian-bitbucket-{{ bitbucket_version }}/app/WEB-INF/classes/logback.xml"
+    regexp: '\d+\<\/maxHistory>'
+    replace: "{{ bitbucket_logrotate_maxhistory }}</maxHistory>"
+    backup: yes
+  notify: restart bitbucket
+  tags: bitbucket_configure

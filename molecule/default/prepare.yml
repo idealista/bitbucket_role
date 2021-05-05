@@ -1,0 +1,6 @@
+---
+
+- name: Prepare
+  hosts: bitbucket_group
+  roles:
+    - java
