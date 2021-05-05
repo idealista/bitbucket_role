@@ -10,6 +10,7 @@ platforms:
   - name: bitbucket
     groups:
       - bitbucket_group
+      - ${JDK_VENDOR:-adoptopenjdk}
     image: ${MOLECULE_DISTRO:-debian:buster-slim}
     privileged: false
     published_ports:

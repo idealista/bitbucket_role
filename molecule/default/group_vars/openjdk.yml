@@ -1,0 +1,5 @@
+---
+java_jdk_vendor: openjdk
+java_open_jdk_version_major: 8
+java_open_jdk_home_dir: "java-{{ java_open_jdk_version_major }}-openjdk-amd64"
+java_open_jdk_home: "/usr/lib/jvm/{{ java_open_jdk_home_dir }}"
