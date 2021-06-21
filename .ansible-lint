@@ -1,7 +1,9 @@
+---
 exclude_paths:
   - ./molecule
   - ./.travis.yml
   - ./.github
+  - ./.cache
 parseable: true
 skip_list:
   - '204'

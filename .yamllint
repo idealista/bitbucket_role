@@ -6,6 +6,7 @@ ignore: |
   molecule/**/tests/
   .github
   .travis.yml
+  .cache
 
 rules:
   braces:
