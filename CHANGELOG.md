@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a changelog](https://github.com/olivierlacan/keep-a-changelog).
 
 ## [Unreleased](https://github.com/idealista/bitbucket_role/tree/develop)
+### Fixed
+- *[#15](https://github.com/idealista/bitbucket_role/issues/15) Fix plugin downloads* @xtianae7
 
 ## [2.1.0](https://github.com/idealista/bitbucket_role/tree/2.1.0)
 [Full Changelog](https://github.com/idealista/bitbucket_role/compare/2.0.0...2.1.0)
