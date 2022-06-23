@@ -1,7 +1,7 @@
 ---
 - name: Install plugins
   get_url:
-    dest: "{{ bitbucket_plugins_dir }}/{{ item.url | basename }}"
+    dest: "{{ bitbucket_plugins_dir }}/{{ item.name }}"
     url: "{{ item.url }}"
     owner: "{{ bitbucket_user }}"
     group: "{{ bitbucket_group }}"

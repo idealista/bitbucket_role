@@ -12,7 +12,7 @@ bitbucket_jmx:
     password_file: "{{ bitbucket_install_dir }}/atlassian-bitbucket-{{ bitbucket_version }}/bin/notapasswordfile"
 
 bitbucket_plugins:
-  - name: commitgraph
-    url: https://marketplace-cdn.atlassian.com/files/artifact/bbad53e7-8672-4000-9206-13bbeceafb9f/bit-booster-commit-graph-2020.09.05.jar
-  - name: web_post_receive_hooks
-    url: https://marketplace-cdn.atlassian.com/files/artifact/96ceec6d-1ca2-45d3-8b66-a5f2ed23120e/bitbucket-web-post-receive-hooks-plugin-4.0.0.jar
+  - name: bit-booster-commit-graph-2020.09.05.jar
+    url: https://marketplace.atlassian.com/download/apps/1219256/version/202009055
+  - name: bitbucket-web-post-receive-hooks-plugin-4.0.0.jar
+    url: https://marketplace.atlassian.com/download/apps/1211539/version/400000000
