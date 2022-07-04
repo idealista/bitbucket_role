@@ -1,8 +1,15 @@
+# Uncomment and edit the line below to define JRE_HOME.
+# If you use the Bitbucket installer, this value will be automatically set to point to the bundled JRE.
+# Once a value is set here, existing JRE_HOME and JAVA_HOME values set in the environment will be overridden and ignored.
+# JRE_HOME=
+
+{% if bitbucket_java_home is defined %}
+JRE_HOME={{ bitbucket_java_home }}
+{% endif %}
+
+# Otherwise, use an existing installed JDK defined by JAVA_HOME
 if [ -z "$JRE_HOME" ]; then
-    if [ -z "$JAVA_HOME" ]; then
-        # If JRE_HOME and JAVA_HOME are not defined, edit this line to define JRE_HOME
-        JRE_HOME={{ bitbucket_java_home }}
-    elif [ -n "$JAVA_HOME" ] && [ -x "$JAVA_HOME/jre/bin/java" ]; then
+    if [ -n "$JAVA_HOME" ] && [ -x "$JAVA_HOME/jre/bin/java" ]; then
         # If JAVA_HOME points to a valid JDK, use its JRE
         JRE_HOME="$JAVA_HOME/jre"
     elif [ -n "$JAVA_HOME" ] && [ -x "$JAVA_HOME/bin/java" ]; then
@@ -36,7 +43,12 @@ else
     return 1
 fi
 
+# This ensures that JAVA_HOME and JRE_HOME are consistent so that
+# both Bitbucket and the bundled search server use the same JVM.
+JAVA_HOME=$JRE_HOME
+
 # If we make it here, the Java environment looks good
 export JRE_HOME
+export JAVA_HOME
 export JAVA_BINARY
 export JAVA_VERSION
