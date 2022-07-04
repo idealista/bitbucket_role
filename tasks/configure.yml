@@ -52,3 +52,4 @@
     backup: yes
   notify: restart bitbucket
   tags: bitbucket_configure
+  when: bitbucket_version is version('7.0.0', '<')
